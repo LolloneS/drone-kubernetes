@@ -8,10 +8,6 @@ fi
 #   PLUGIN_KUBERNETES_USER="default"
 # fi
 
-echo "PLUGIN_KUBERNETES_USER:"
-echo "${PLUGIN_KUBERNETES_USER}"
-
-
 if [ ! -z ${PLUGIN_KUBERNETES_USER} ]; then
   KUBERNETES_USER=$PLUGIN_KUBERNETES_USER
 fi
@@ -30,7 +26,7 @@ if [ ! -z ${PLUGIN_KUBERNETES_CERT} ]; then
 fi
 
 
-kubectl config set-credentials default --token=${KUBERNETES_TOKEN}
+kubectl config set-credentials ${KUBERNETES_USER} --token=${KUBERNETES_TOKEN}
 if [ ! -z ${KUBERNETES_CERT} ]; then
   echo ${KUBERNETES_CERT} | base64 -d > ca.crt
   kubectl config set-cluster default --server=${KUBERNETES_SERVER} --certificate-authority=ca.crt
@@ -39,8 +35,8 @@ else
   kubectl config set-cluster default --server=${KUBERNETES_SERVER} --insecure-skip-tls-verify=true
 fi
 
-kubectl config set-context default --cluster=default --user=${KUBERNETES_USER}
-kubectl config use-context default
+kubectl config set-context ${KUBERNETES_USER} --cluster=default --user=${KUBERNETES_USER}
+kubectl config use-context ${KUBERNETES_USER}
 
 # kubectl version
 IFS=',' read -r -a DEPLOYMENTS <<< "${PLUGIN_DEPLOYMENT}"
