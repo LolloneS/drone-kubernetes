@@ -25,18 +25,24 @@ if [ ! -z ${PLUGIN_KUBERNETES_CERT} ]; then
   KUBERNETES_CERT=${PLUGIN_KUBERNETES_CERT}
 fi
 
+if [ ! -z ${PLUGIN_KUBERNETES_CLUSTER} ]; then
+  KUBERNETES_CLUSTER=${PLUGIN_KUBERNETES_CLUSTER}
+fi
+
 
 kubectl config set-credentials ${KUBERNETES_USER} --token=${KUBERNETES_TOKEN}
 if [ ! -z ${KUBERNETES_CERT} ]; then
   echo ${KUBERNETES_CERT} | base64 -d > ca.crt
-  kubectl config set-cluster default --server=${KUBERNETES_SERVER} --certificate-authority=ca.crt
+  kubectl config set-cluster ${KUBERNETES_CLUSTER} --server=${KUBERNETES_SERVER} --certificate-authority=ca.crt
 else
   echo "WARNING: Using insecure connection to cluster"
-  kubectl config set-cluster default --server=${KUBERNETES_SERVER} --insecure-skip-tls-verify=true
+  kubectl config set-cluster ${KUBERNETES_CLUSTER} --server=${KUBERNETES_SERVER} --insecure-skip-tls-verify=true
 fi
 
-kubectl config set-context ${KUBERNETES_USER} --cluster=default --user=${KUBERNETES_USER}
+kubectl config set-context ${KUBERNETES_USER} --cluster=${KUBERNETES_CLUSTER} --user=${KUBERNETES_USER}
 kubectl config use-context ${KUBERNETES_USER}
+
+echo ${KUBERNETES_USER}
 
 # kubectl version
 IFS=',' read -r -a DEPLOYMENTS <<< "${PLUGIN_DEPLOYMENT}"
