@@ -8,6 +8,10 @@ fi
 #   PLUGIN_KUBERNETES_USER="default"
 # fi
 
+echo "PLUGIN_KUBERNETES_USER:"
+echo "${PLUGIN_KUBERNETES_USER}"
+
+
 if [ ! -z ${PLUGIN_KUBERNETES_USER} ]; then
   KUBERNETES_USER=$PLUGIN_KUBERNETES_USER
 fi
@@ -24,6 +28,7 @@ fi
 if [ ! -z ${PLUGIN_KUBERNETES_CERT} ]; then
   KUBERNETES_CERT=${PLUGIN_KUBERNETES_CERT}
 fi
+
 
 kubectl config set-credentials default --token=${KUBERNETES_TOKEN}
 if [ ! -z ${KUBERNETES_CERT} ]; then
