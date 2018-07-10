@@ -4,9 +4,14 @@ if [ -z ${PLUGIN_NAMESPACE} ]; then
   PLUGIN_NAMESPACE="default"
 fi
 
-if [ -z ${PLUGIN_KUBERNETES_USER} ]; then
-  PLUGIN_KUBERNETES_USER="default"
+# if [ -z ${PLUGIN_KUBERNETES_USER} ]; then
+#   PLUGIN_KUBERNETES_USER="default"
+# fi
+
+if [ ! -z ${PLUGIN_KUBERNETES_USER} ]; then
+  KUBERNETES_USER=$PLUGIN_KUBERNETES_USER
 fi
+
 
 if [ ! -z ${PLUGIN_KUBERNETES_TOKEN} ]; then
   KUBERNETES_TOKEN=$PLUGIN_KUBERNETES_TOKEN
@@ -29,7 +34,7 @@ else
   kubectl config set-cluster default --server=${KUBERNETES_SERVER} --insecure-skip-tls-verify=true
 fi
 
-kubectl config set-context default --cluster=default --user=${PLUGIN_KUBERNETES_USER}
+kubectl config set-context default --cluster=default --user=${KUBERNETES_USER}
 kubectl config use-context default
 
 # kubectl version
