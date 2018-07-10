@@ -6,10 +6,6 @@ if [ -z ${PLUGIN_NAMESPACE} ]; then
   PLUGIN_NAMESPACE="default"
 fi
 
-# if [ -z ${PLUGIN_KUBERNETES_USER} ]; then
-#   PLUGIN_KUBERNETES_USER="default"
-# fi
-
 if [ ! -z ${PLUGIN_KUBERNETES_USER} ]; then
   KUBERNETES_USER=$PLUGIN_KUBERNETES_USER
 fi
@@ -44,7 +40,7 @@ fi
 kubectl config set-context ${PLUGIN_KUBERNETES_USER} --cluster=${PLUGIN_KUBERNETES_CLUSTER} --user=${PLUGIN_KUBERNETES_USER}
 kubectl config use-context ${PLUGIN_KUBERNETES_USER}
 
-echo ${PLUGIN_KUBERNETES_USER}
+echo "Plugin: ${PLUGIN_KUBERNETES_USER}"
 
 # kubectl version
 IFS=',' read -r -a DEPLOYMENTS <<< "${PLUGIN_DEPLOYMENT}"
