@@ -57,6 +57,8 @@ This more complex example demonstrates how to deploy to several environments bas
             kubernetes_server: ${KUBERNETES_SERVER_STAGING}
             kubernetes_cert: ${KUBERNETES_CERT_STAGING}
             kubernetes_token: ${KUBERNETES_TOKEN_STAGING}
+            kubernetes_cluster: ${KUBERNETES_CLUSTER_STAGING}
+            kubernetes_user: ${KUBERNETES_USER_STAGING}
             deployment: my-deployment
             repo: myorg/myrepo
             container: my-container
