@@ -23,12 +23,18 @@ if [ ! -z ${PLUGIN_KUBERNETES_CERT} ]; then
   KUBERNETES_CERT=${PLUGIN_KUBERNETES_CERT}
 fi
 
+if [ ! -z ${PLUGIN_KUBERNETES_KEY} ]; then
+  KUBERNETES_KEY=${PLUGIN_KUBERNETES_KEY}
+fi
+
 if [ ! -z ${PLUGIN_KUBERNETES_CLUSTER} ]; then
   KUBERNETES_CLUSTER=${PLUGIN_KUBERNETES_CLUSTER}
 fi
 
-
+if [ ! -z ${PLUGIN_KUBERNETES_TOKEN} ]; then
 kubectl config set-credentials ${PLUGIN_KUBERNETES_USER} --token=${PLUGIN_KUBERNETES_TOKEN}
+fi
+
 if [ ! -z ${KUBERNETES_CERT} ]; then
   echo ${KUBERNETES_CERT} | base64 -d > ca.crt
   kubectl config set-cluster ${KUBERNETES_CLUSTER} --server=${KUBERNETES_SERVER} --certificate-authority=ca.crt
